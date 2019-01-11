@@ -8,24 +8,28 @@ class ConvModel(nn.Module):
         self.emb = nn.Embedding(vocab_size, emb_size)
 
         out_channel_conv1 = 25
-        kernel_size = 5
-        self.conv1 = nn.Conv1d(emb_size, out_channel_conv1, kernel_size)
-        self.rel1 = nn.ReLU()
-
+        self.seq1 = nn.Sequential(
+            nn.Conv1d(emb_size, 25, 5),
+            nn.ReLU(),
+            nn.Conv1d(25, out_channel_conv1, 3),
+            nn.ReLU()
+        )
         # TODO rajouter couche
 
         nb_label = 6
-        self.lin1 = nn.Linear(out_channel_conv1, nb_label)
-        self.sig1 = nn.Sigmoid()
+        self.seq2 = nn.Sequential(
+            nn.Linear(out_channel_conv1, out_channel_conv1 * 4),
+            nn.ReLU(),
+            nn.Linear(out_channel_conv1 * 4, nb_label),
+            nn.Sigmoid()
+        )
 
     def forward(self, X):
         # TODO verifier enchainement shape
         out = self.emb(X)
-        out = out.permute(1, 0).unsqueeze(0)
-        out = self.conv1(out)
-        out = self.rel1(out)
+        out = out.permute(0, 2, 1)
+        out = self.seq1(out)
         # somme sur tout les mots -> out.size() == (batch, out_channel_conv1)
-        out = out.sum(dim=2)
-        out = self.lin1(out)
-        out = self.sig1(out)
+        out = out.mean(dim=2)
+        out = self.seq2(out)
         return out
