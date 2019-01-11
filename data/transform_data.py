@@ -34,7 +34,7 @@ def mk_vocab(data):
 
 
 def words_to_index(word_array, vocab, count):
-    return np.array([vocab[w] for w in word_array if count[w] > limit_count])
+    return np.array([vocab[w] for w in word_array if w in vocab and w in count and count[w] > limit_count])
 
 
 def pass_data_to_word_idx(data, vocab, count):
