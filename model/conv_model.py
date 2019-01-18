@@ -22,7 +22,7 @@ class ConvModel(nn.Module):
         nb_label = 6
         self.seq2 = nn.Sequential(
             nn.Linear(out_channel_conv1, out_channel_conv1 * 4),
-            nn.ReLU(),
+            nn.BatchNorm1d(out_channel_conv1 * 4),
             nn.Linear(out_channel_conv1 * 4, nb_label),
             nn.Sigmoid()
         )
