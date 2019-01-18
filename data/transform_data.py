@@ -12,7 +12,7 @@ def split_comment(data):
     res = []
     for i, l in enumerate(data):
         ident = l[0]
-        phrase = l[1]
+        phrase = l[1].lower()
         res.append((ident, np.asarray(re.findall(r"[\w]+", phrase)))) # Sépare ponctution et mots de la séquence |[.,!?;']
     return res
 
