@@ -3,17 +3,17 @@ import torch.nn as nn
 
 class ConvModel(nn.Module):
 
-    def __init__(self, vocab_size, sent_max_len, emb_size=16):
+    def __init__(self, vocab_size, sent_max_len, emb_size=32):
         super(ConvModel, self).__init__()
         self.emb = nn.Embedding(vocab_size, emb_size)
 
-        out_channel_conv1 = 32
+        out_channel_conv1 = 128
         out_conv1_size = sent_max_len - 5 + 1
         out_conv2_size = out_conv1_size - 3 + 1
         self.seq1 = nn.Sequential(
-            nn.Conv1d(emb_size, 24, 5),
+            nn.Conv1d(emb_size, 64, 5),
             nn.ReLU(),
-            nn.Conv1d(24, out_channel_conv1, 3),
+            nn.Conv1d(64, out_channel_conv1, 3),
             nn.ReLU(),
             nn.MaxPool1d(out_conv2_size)
         )
