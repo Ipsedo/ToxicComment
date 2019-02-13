@@ -17,7 +17,6 @@ class ConvModel(nn.Module):
             nn.ReLU(),
             nn.MaxPool1d(out_conv2_size)
         )
-        # TODO rajouter couche
 
         nb_label = 6
         self.seq2 = nn.Sequential(
@@ -28,7 +27,6 @@ class ConvModel(nn.Module):
         )
 
     def forward(self, X):
-        # TODO verifier enchainement shape
         out = self.emb(X)
         out = out.permute(0, 2, 1)
         out = self.seq1(out).squeeze(2)
