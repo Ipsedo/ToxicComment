@@ -53,7 +53,11 @@ def get_max_len_sent(sentences):
 def pad_sentences(sentences, max_len, pad_idx):
     res = []
     for s in sentences:
-        new_s = np.lib.pad(s, (0, max_len - s.shape[0]), 'constant', constant_values=(pad_idx,))
+        if s.shape[0] < max_len:
+            new_s = np.lib.pad(s, (0, max_len - s.shape[0]), 'constant', constant_values=(pad_idx,))
+        else:
+            # la longueur max sur le test est de plus de 1400 mots...
+            new_s = s[:max_len]
         res.append(new_s)
     return np.asarray(res)
 
