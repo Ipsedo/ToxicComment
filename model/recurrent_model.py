@@ -3,10 +3,10 @@ import torch.nn as nn
 
 
 class RecurrentModel(nn.Module):
-    def __init__(self, vocab_size, batch_size, seq_length, emb_size=16, hidden_size=32):
+    def __init__(self, vocab_size, batch_size, seq_length, pad_idx, emb_size=16, hidden_size=32):
         super(RecurrentModel, self).__init__()
 
-        self.emb = nn.Embedding(vocab_size, emb_size)
+        self.emb = nn.Embedding(vocab_size, emb_size, padding_idx=pad_idx)
         self.lstm = nn.LSTM(emb_size, hidden_size, batch_first=True)
         self.maxpool = nn.MaxPool1d(seq_length)
 
