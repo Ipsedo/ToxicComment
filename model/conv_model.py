@@ -36,8 +36,6 @@ class ConvModel(nn.Module):
         out = self.emb(X)
         out = out.permute(0, 2, 1)
         out = self.conv_layers(out).squeeze(2)
-        # somme sur tout les mots -> out.size() == (batch, out_channel_conv1)
-        # out = out.mean(dim=2)
         out = self.lin_layers(out)
         return out
 
@@ -128,7 +126,5 @@ class ConvModel3(nn.Module):
         out = self.emb(X)
         out = out.permute(0, 2, 1)
         out = self.seq1(out).squeeze(2)
-        # somme sur tout les mots -> out.size() == (batch, out_channel_conv1)
-        # out = out.mean(dim=2)
         out = self.seq2(out)
         return out
