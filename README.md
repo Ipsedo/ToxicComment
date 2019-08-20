@@ -31,4 +31,14 @@ ToxicComment
     |-- toxic_comment.ipynb # Notebook principal d'entrainement
 ```
 
-Les différents csv sont à placer dans un répertoire `res` situé à la racine soit `/path/to/ToxicComment/res/`
+Les différents csv sont à placer dans un répertoire `res` situé à la racine du repertoire principal du projet :
+```bash
+$ # Move to ToxicComment root dir
+$ cd /path/to/ToxicComment
+$ # Create and move to res folder
+$ mkdir res && cd res
+$ # Download dataset
+$ kaggle competitions download -c jigsaw-toxic-comment-classification-challenge
+$ # Unzip all files
+$ unzip "*.zip"
+```
